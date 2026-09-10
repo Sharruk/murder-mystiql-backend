@@ -4,37 +4,42 @@
 -- Pre-seeds 30 participant slots and initial level specifications.
 
 -- 1. Seed Participants (DETECTIVE-01 to DETECTIVE-30)
-INSERT INTO game.participants (username, display_name, seat_no) VALUES
-('DETECTIVE-01', 'Sherlock Holmes', 'Lab-01'),
-('DETECTIVE-02', 'John Watson', 'Lab-02'),
-('DETECTIVE-03', 'Hercule Poirot', 'Lab-03'),
-('DETECTIVE-04', 'Miss Marple', 'Lab-04'),
-('DETECTIVE-05', 'Benoit Blanc', 'Lab-05'),
-('DETECTIVE-06', 'Columbo', 'Lab-06'),
-('DETECTIVE-07', 'Adrian Monk', 'Lab-07'),
-('DETECTIVE-08', 'Veronica Mars', 'Lab-08'),
-('DETECTIVE-09', 'Philip Marlowe', 'Lab-09'),
-('DETECTIVE-10', 'Sam Spade', 'Lab-10'),
-('DETECTIVE-11', 'Nancy Drew', 'Lab-11'),
-('DETECTIVE-12', 'Perry Mason', 'Lab-12'),
-('DETECTIVE-13', 'C. Auguste Dupin', 'Lab-13'),
-('DETECTIVE-14', 'Jessica Fletcher', 'Lab-14'),
-('DETECTIVE-15', 'Nero Wolfe', 'Lab-15'),
-('DETECTIVE-16', 'K Detective 16', 'Lab-16'),
-('DETECTIVE-17', 'K Detective 17', 'Lab-17'),
-('DETECTIVE-18', 'K Detective 18', 'Lab-18'),
-('DETECTIVE-19', 'K Detective 19', 'Lab-19'),
-('DETECTIVE-20', 'K Detective 20', 'Lab-20'),
-('DETECTIVE-21', 'K Detective 21', 'Lab-21'),
-('DETECTIVE-22', 'K Detective 22', 'Lab-22'),
-('DETECTIVE-23', 'K Detective 23', 'Lab-23'),
-('DETECTIVE-24', 'K Detective 24', 'Lab-24'),
-('DETECTIVE-25', 'K Detective 25', 'Lab-25'),
-('DETECTIVE-26', 'K Detective 26', 'Lab-26'),
-('DETECTIVE-27', 'K Detective 27', 'Lab-27'),
-('DETECTIVE-28', 'K Detective 28', 'Lab-28'),
-('DETECTIVE-29', 'K Detective 29', 'Lab-29'),
-('DETECTIVE-30', 'K Detective 30', 'Lab-30')
+-- Each participant gets a random organizer-assigned PIN (design doc Sec. 5.5 "Optional hardening").
+-- Without a PIN, /api/session/start is a bare username lookup, which is guessable in this
+-- sequential DETECTIVE-01..30 scheme -- seeding a PIN here closes that out-of-the-box gap.
+-- Regenerate these before a real event (see database/generate_pins.py) and hand each PIN to
+-- its detective alongside their username; do not distribute this file to participants.
+INSERT INTO game.participants (username, display_name, seat_no, pin) VALUES
+('DETECTIVE-01', 'Sherlock Holmes', 'Lab-01', '836001'),
+('DETECTIVE-02', 'John Watson', 'Lab-02', '307243'),
+('DETECTIVE-03', 'Hercule Poirot', 'Lab-03', '219404'),
+('DETECTIVE-04', 'Miss Marple', 'Lab-04', '260718'),
+('DETECTIVE-05', 'Benoit Blanc', 'Lab-05', '207413'),
+('DETECTIVE-06', 'Columbo', 'Lab-06', '010000'),
+('DETECTIVE-07', 'Adrian Monk', 'Lab-07', '385608'),
+('DETECTIVE-08', 'Veronica Mars', 'Lab-08', '696289'),
+('DETECTIVE-09', 'Philip Marlowe', 'Lab-09', '688588'),
+('DETECTIVE-10', 'Sam Spade', 'Lab-10', '489807'),
+('DETECTIVE-11', 'Nancy Drew', 'Lab-11', '779901'),
+('DETECTIVE-12', 'Perry Mason', 'Lab-12', '955211'),
+('DETECTIVE-13', 'C. Auguste Dupin', 'Lab-13', '235172'),
+('DETECTIVE-14', 'Jessica Fletcher', 'Lab-14', '470176'),
+('DETECTIVE-15', 'Nero Wolfe', 'Lab-15', '092441'),
+('DETECTIVE-16', 'K Detective 16', 'Lab-16', '044958'),
+('DETECTIVE-17', 'K Detective 17', 'Lab-17', '031985'),
+('DETECTIVE-18', 'K Detective 18', 'Lab-18', '207497'),
+('DETECTIVE-19', 'K Detective 19', 'Lab-19', '065987'),
+('DETECTIVE-20', 'K Detective 20', 'Lab-20', '789874'),
+('DETECTIVE-21', 'K Detective 21', 'Lab-21', '730592'),
+('DETECTIVE-22', 'K Detective 22', 'Lab-22', '513226'),
+('DETECTIVE-23', 'K Detective 23', 'Lab-23', '076029'),
+('DETECTIVE-24', 'K Detective 24', 'Lab-24', '015360'),
+('DETECTIVE-25', 'K Detective 25', 'Lab-25', '896634'),
+('DETECTIVE-26', 'K Detective 26', 'Lab-26', '973341'),
+('DETECTIVE-27', 'K Detective 27', 'Lab-27', '588419'),
+('DETECTIVE-28', 'K Detective 28', 'Lab-28', '586372'),
+('DETECTIVE-29', 'K Detective 29', 'Lab-29', '949520'),
+('DETECTIVE-30', 'K Detective 30', 'Lab-30', '009898')
 ON CONFLICT (username) DO NOTHING;
 
 -- 2. Seed Levels (Generic Level Architecture - Story details to be updated by story team)
