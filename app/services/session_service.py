@@ -2,6 +2,7 @@
 Service handling participant session creation, resumption, and token resolution.
 """
 
+import secrets
 from datetime import datetime, timezone
 from typing import Optional, Tuple
 from fastapi import Depends, Header, HTTPException, status
@@ -79,8 +80,9 @@ async def start_or_resume_session(
             detail=f"Participant username '{username}' not found. Please verify your assigned detective ID.",
         )
 
-    # If PIN verification is configured on participant
-    if participant.pin and participant.pin != pin:
+    # If PIN verification is configured on participant, it must be supplied and match exactly.
+    # Constant-time comparison avoids leaking correctness via response-time differences.
+    if participant.pin and not secrets.compare_digest(participant.pin, pin or ""):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid PIN for this detective account.",

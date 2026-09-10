@@ -60,10 +60,15 @@ Authenticate a detective and obtain a session token.
 ```json
 {
   "username": "DETECTIVE-01",
-  "pin": null
+  "pin": "836001"
 }
 ```
-*(Note: `pin` is optional; pass `null` or omit unless event organizers enable team PINs).*
+*(Note: `pin` is required for any participant whose account has one configured — the seeded
+event data assigns a PIN to every `DETECTIVE-NN` account by default, since usernames alone are
+sequential and guessable. Organizers distribute each detective's PIN alongside their username;
+omitting or sending the wrong `pin` for such an account returns `401 Unauthorized`. `pin` may be
+omitted only for accounts an organizer deliberately leaves unconfigured, i.e. `pin` is `NULL` in
+the database.)*
 
 #### Success Response (`200 OK`):
 ```json
